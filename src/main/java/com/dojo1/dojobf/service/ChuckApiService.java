@@ -1,5 +1,6 @@
 package com.dojo1.dojobf.service;
 
+import com.dojo1.dojobf.exceptions.JokeNotFoundException;
 import com.dojo1.dojobf.model.ChuckJoke;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,6 @@ public class ChuckApiService {
     }
 
 
-
     private ChuckJoke createRequest(String url) {
 
         HttpClient client = HttpClient.newHttpClient();
@@ -34,16 +34,13 @@ public class ChuckApiService {
         log.info("JokeService => request: " + request);
         log.info("JokeService <<== response: " + response);
 
-//        if (response.contains("error")) {
-//            throw new JokesNotFoundException("any jokes found for this request");
-//        }
 
         ChuckJoke chuckJoke = new ChuckJoke();
         try {
             ObjectMapper mapper = new ObjectMapper();
             chuckJoke = mapper.readValue(response, ChuckJoke.class);
         } catch (Exception e) {
-
+            throw new JokeNotFoundException("any jokes found for this request");
         }
         return chuckJoke;
     }
