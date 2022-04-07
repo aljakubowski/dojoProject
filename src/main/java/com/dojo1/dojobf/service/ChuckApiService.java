@@ -15,12 +15,10 @@ import java.net.http.HttpResponse;
 @Slf4j
 public class ChuckApiService {
 
-
-    public String getRandomJoke(){
+    public String getRandomJoke() {
         String url = "https://api.chucknorris.io/jokes/random";
         return createRequest(url).toString();
     }
-
 
     private ChuckJoke createRequest(String url) {
 
@@ -31,17 +29,23 @@ public class ChuckApiService {
                 .thenApply(HttpResponse::body)
                 .join();
 
-        log.info("JokeService => request: " + request);
-        log.info("JokeService <<== response: " + response);
+        log.info("ChuckApiService => request: " + request);
+        log.info("ChuckApiService <<== response: " + response);
 
 
         ChuckJoke chuckJoke = new ChuckJoke();
         try {
             ObjectMapper mapper = new ObjectMapper();
             chuckJoke = mapper.readValue(response, ChuckJoke.class);
+
         } catch (Exception e) {
+
+        }
+
+        if (chuckJoke.toString() == null) {
             throw new JokeNotFoundException("any jokes found for this request");
         }
+
         return chuckJoke;
     }
 }
