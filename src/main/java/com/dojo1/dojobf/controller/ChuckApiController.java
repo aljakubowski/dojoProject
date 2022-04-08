@@ -7,10 +7,7 @@ import com.dojo1.dojobf.service.ChuckApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "chuckapi/")
@@ -29,6 +26,7 @@ public class ChuckApiController {
 //        return chuckApiService.getRandomJoke();
 //    }
 
+    @CrossOrigin(origins = "https://chuck-api-app.herokuapp.com")
     @GetMapping(path = "/randomjoke")
     public ChuckJoke getRandomJoke() {
         return chuckApiService.getRandomJokeJson();
