@@ -26,7 +26,7 @@ public class ChuckApiController {
 //        return chuckApiService.getRandomJoke();
 //    }
 
-    @CrossOrigin(origins = "https://chuck-api-app.herokuapp.com")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(path = "/randomjoke")
     public ChuckJoke getRandomJoke() {
         return chuckApiService.getRandomJokeJson();
