@@ -23,12 +23,13 @@ public class ChuckApiController {
         this.chuckApiService = chuckApiService;
     }
 
-    // == endpoint for random Chuck joke ==
-//    @GetMapping(path = "/randomjoke")
-//    public String getRandomJoke() {
-//        return chuckApiService.getRandomJoke();
-//    }
+    // == endpoint for random Chuck joke  String ==
+    @GetMapping(path = "/randomjoke/string")
+    public String getRandomJokeString() {
+        return chuckApiService.getRandomJoke();
+    }
 
+    // == endpoint for random Chuck joke Object ==
     @GetMapping(path = "/randomjoke")
     public ChuckJoke getRandomJoke() {
         return chuckApiService.getRandomJokeJson();
@@ -41,5 +42,4 @@ public class ChuckApiController {
         error.setMessage(e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-
 }
