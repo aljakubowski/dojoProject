@@ -2,6 +2,7 @@ package com.dojo1.dojobf.controller;
 
 import com.dojo1.dojobf.exceptions.JokeNotFoundError;
 import com.dojo1.dojobf.exceptions.JokeNotFoundException;
+import com.dojo1.dojobf.model.ChuckJoke;
 import com.dojo1.dojobf.service.ChuckApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,14 @@ public class ChuckApiController {
     }
 
     // == endpoint for random Chuck joke ==
+//    @GetMapping(path = "/randomjoke")
+//    public String getRandomJoke() {
+//        return chuckApiService.getRandomJoke();
+//    }
+
     @GetMapping(path = "/randomjoke")
-    public String getRandomJoke() {
-        return chuckApiService.getRandomJoke();
+    public ChuckJoke getRandomJoke() {
+        return chuckApiService.getRandomJokeJson();
     }
 
     @ExceptionHandler

@@ -20,6 +20,12 @@ public class ChuckApiService {
         return createRequest(url).toString();
     }
 
+    public ChuckJoke getRandomJokeJson(){
+        String url = "https://api.chucknorris.io/jokes/random";
+        ChuckJoke chuckJoke = createRequest(url);
+        return chuckJoke;
+    }
+
     private ChuckJoke createRequest(String url) {
 
         HttpClient client = HttpClient.newHttpClient();
