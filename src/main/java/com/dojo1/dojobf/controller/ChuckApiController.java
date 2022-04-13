@@ -2,37 +2,34 @@ package com.dojo1.dojobf.controller;
 
 import com.dojo1.dojobf.exceptions.JokeNotFoundError;
 import com.dojo1.dojobf.exceptions.JokeNotFoundException;
-import com.dojo1.dojobf.model.ChuckJoke;
+import com.dojo1.dojobf.model.ChuckJokeDto;
 import com.dojo1.dojobf.service.ChuckApiService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "chuckapi/")
+@RequiredArgsConstructor
 public class ChuckApiController {
 
     private final ChuckApiService chuckApiService;
 
-    @Autowired
-    public ChuckApiController(ChuckApiService chuckApiService) {
-        this.chuckApiService = chuckApiService;
-    }
-
-    // == endpoint for random Chuck joke  String ==
-    @GetMapping(path = "/randomjoke/string")
-    public String getRandomJokeString() {
+    /**
+     * endpoint for random Chuck joke Object
+     */
+    @GetMapping(path = "/randomjoke")
+    public ChuckJokeDto getRandomJoke() {
         return chuckApiService.getRandomJoke();
     }
 
-    // == endpoint for random Chuck joke Object ==
-    @GetMapping(path = "/randomjoke")
-    public ChuckJoke getRandomJoke() {
-        return chuckApiService.getRandomJokeJson();
+    /**
+     * endpoint for random Chuck joke Object of a given category as a param
+     */
+    @GetMapping(path = "/randomjoke/{category}")
+    public ChuckJokeDto getRandomJoke(@PathVariable String category) {
+        return chuckApiService.getRandomJoke(category);
     }
 
     @ExceptionHandler
