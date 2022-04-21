@@ -19,11 +19,6 @@ public class RickMortyApiController {
 
     private final RickMortyApiService rmApiService;
 
-//    @GetMapping(path = "/num")
-//    public int getNum() {
-//        return rmApiService.getPagesCount();
-//    }
-
     @GetMapping(path = "/allepisodes")
     public List<EpisodesResultsDTO> getAllEpisodesList(){
         rmApiService.getSeasonAndEpisodes();

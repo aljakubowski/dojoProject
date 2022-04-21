@@ -18,23 +18,15 @@ public class RickMortyApiService {
 
     private final RickMortyWebClient rickMortyWebClient;
 
-//    public int getPagesCount(){
-//        return rickMortyWebClient.getNumberOfPages();
-//    }
-
     public List<EpisodesResultsDTO> getAllEpisodesList(){
         return rickMortyWebClient.getAllEpisodesList();
     }
 
 
     public RickMortySeasonsEpisodesDTO getSeasonAndEpisodes(){
+
         List<EpisodesResultsDTO> list = getAllEpisodesList();
-
         int numOfLastSeason = getNumOfSeason(list.get(list.size()-1).getEpisode());
-
-        log.info("%%% " + numOfLastSeason);
-
-
 
         List<List<EpisodesResultsDTO>> listOfSeasons = new ArrayList<>();
         List<RickMortySeasonDTO> listOfOneSeason = new ArrayList<>();
@@ -42,7 +34,6 @@ public class RickMortyApiService {
         for (int i = 1; i <= numOfLastSeason ; i++) {
             int n = i;
             List<EpisodesResultsDTO> l = new ArrayList<>();
-//            RickMortySeasonDTO s = new RickMortySeasonDTO();
             list.forEach( e-> { if (n == getNumOfSeason(e.getEpisode())) {
                 l.add(e);
             }
@@ -51,9 +42,6 @@ public class RickMortyApiService {
             RickMortySeasonDTO rmsDTO = RickMortySeasonDTO.builder().seasonNumber(i).episodesCount(l.size()).build();
             listOfOneSeason.add(rmsDTO);
         }
-        log.info("THIS " + listOfSeasons.size());
-        log.info("THIS THIS " + listOfSeasons.get(0).size());
-
         return RickMortySeasonsEpisodesDTO.builder().listOfEpisodesInSeason(listOfOneSeason).build();
     }
 
@@ -61,17 +49,5 @@ public class RickMortyApiService {
         episode = episode.substring(2,3);
         return Integer.parseInt(episode);
     }
-
-
-    private RickMortySeasonDTO getSeasonAndEpisodess(){
-        return null;
-    }
-
-
-//        return ChuckJokeDto.builder()
-//                .time(jokeWithTimeDto.getUpdated_at())
-//                .joke(jokeWithTimeDto.getValue())
-//                .build();
-
 
 }

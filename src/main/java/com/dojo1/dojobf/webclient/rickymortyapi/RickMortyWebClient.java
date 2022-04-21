@@ -48,23 +48,6 @@ public class RickMortyWebClient {
         return resultList;
     }
 
-
-//    public ChuckJokeDto getRandomChuckJoke() {
-//
-//        JokeWithTimeDto jokeWithTimeDto;
-//        try {
-//            jokeWithTimeDto = createRequest("random", JokeWithTimeDto.class);
-//        } catch (Exception e) {
-//            throw new JokeNotFoundException("Joke was not found ;,(");
-//        }
-//
-//        return ChuckJokeDto.builder()
-//                .time(jokeWithTimeDto.getUpdated_at())
-//                .joke(jokeWithTimeDto.getValue())
-//                .build();
-//    }
-
-
     private <T> T createRequest(String url, Class<T> responseType) {
         return restTemplate.getForObject(RICK_MARTY_URL + url, responseType);
     }
