@@ -3,7 +3,6 @@ package com.dojo1.dojobf.controller;
 import com.dojo1.dojobf.model.RickMortySeasonsEpisodesDTO;
 import com.dojo1.dojobf.service.RickMortyApiService;
 import com.dojo1.dojobf.webclient.rickymortyapi.dto.EpisodesResultsDTO;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +20,14 @@ public class RickMortyApiController {
 
     @GetMapping(path = "/allepisodes")
     public List<EpisodesResultsDTO> getAllEpisodesList(){
-        rmApiService.getSeasonAndEpisodes();
+        rmApiService.getSeasonAndEpisodesDTO();
         return rmApiService.getAllEpisodesList();
     }
 
     @GetMapping(path = "/episodes")
     @CrossOrigin(origins = "http://localhost:4200")
     public RickMortySeasonsEpisodesDTO getSeasonAndEpisodes(){
-        return rmApiService.getSeasonAndEpisodes();
+        return rmApiService.getSeasonAndEpisodesDTO();
     }
 
 

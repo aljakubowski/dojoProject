@@ -18,18 +18,6 @@ public class RickMortyWebClient {
     public static final String RICK_MARTY_URL = "https://rickandmortyapi.com/api/";
     private final RestTemplate restTemplate = new RestTemplate();
 
-
-    private int getNumberOfPages() {
-        EpisodesDTO info;
-        try {
-            info = createRequest("episode", EpisodesDTO.class);
-        } catch (Exception e) {
-            throw new JokeNotFoundException("list was not found"); //todo exception name
-        }
-        return info.getInfo().getPages();
-    }
-
-
     public List<EpisodesResultsDTO> getAllEpisodesList(){
 
         int pages = getNumberOfPages();
@@ -39,16 +27,25 @@ public class RickMortyWebClient {
         for (int i = 1; i <= pages; i++) {
             EpisodesDTO ep;
             log.info(">>> >> ?page=" + i);
-            ep = createRequest("episode?page=" + i, EpisodesDTO.class);
+            ep = createRequestToApi("episode?page=" + i, EpisodesDTO.class);
             log.info(">>> >> > " + ep);
             List<EpisodesResultsDTO> pageList = new ArrayList<>(ep.getResults());
             resultList.addAll(pageList);
         }
-
         return resultList;
     }
 
-    private <T> T createRequest(String url, Class<T> responseType) {
+    private int getNumberOfPages() {
+        EpisodesDTO info;
+        try {
+            info = createRequestToApi("episode", EpisodesDTO.class);
+        } catch (Exception e) {
+            throw new JokeNotFoundException("list was not found"); //todo exception name
+        }
+        return info.getInfo().getPages();
+    }
+
+    private <T> T createRequestToApi(String url, Class<T> responseType) {
         return restTemplate.getForObject(RICK_MARTY_URL + url, responseType);
     }
 }

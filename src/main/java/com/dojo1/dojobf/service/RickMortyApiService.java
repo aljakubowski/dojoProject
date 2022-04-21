@@ -23,7 +23,7 @@ public class RickMortyApiService {
     }
 
 
-    public RickMortySeasonsEpisodesDTO getSeasonAndEpisodes(){
+    public RickMortySeasonsEpisodesDTO getSeasonAndEpisodesDTO(){
 
         List<EpisodesResultsDTO> list = getAllEpisodesList();
         int numOfLastSeason = getNumOfSeason(list.get(list.size()-1).getEpisode());
