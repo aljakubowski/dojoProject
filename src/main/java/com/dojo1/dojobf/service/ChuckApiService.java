@@ -1,7 +1,7 @@
 package com.dojo1.dojobf.service;
 
 import com.dojo1.dojobf.model.ChuckJokeDto;
-import com.dojo1.dojobf.webclient.ChuckApiWebClient;
+import com.dojo1.dojobf.webclient.chuckapi.ChuckApiWebClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

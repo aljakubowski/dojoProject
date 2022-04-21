@@ -1,8 +1,8 @@
-package com.dojo1.dojobf.webclient;
+package com.dojo1.dojobf.webclient.chuckapi;
 
 import com.dojo1.dojobf.exceptions.JokeNotFoundException;
 import com.dojo1.dojobf.model.ChuckJokeDto;
-import com.dojo1.dojobf.webclient.dto.JokeWithTimeDto;
+import com.dojo1.dojobf.webclient.chuckapi.dto.JokeWithTimeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

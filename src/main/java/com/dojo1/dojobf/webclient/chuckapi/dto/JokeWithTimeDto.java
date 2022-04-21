@@ -1,4 +1,4 @@
-package com.dojo1.dojobf.webclient.dto;
+package com.dojo1.dojobf.webclient.chuckapi.dto;
 
 import lombok.Getter;
 
