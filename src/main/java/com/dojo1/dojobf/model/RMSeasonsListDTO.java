@@ -5,12 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ChuckJokeDto {
-    private String time;
-    private String category;
-    private String joke;
+public class RMSeasonsListDTO {
+    private List<RMSeasonNumEpisodeCountDTO> listOfEpisodesInSeason;
 }

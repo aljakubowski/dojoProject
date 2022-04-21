@@ -1,12 +1,7 @@
-package com.dojo1.dojobf.controller;
+package com.dojo1.dojobf.controller.chuckjoke;
 
-import com.dojo1.dojobf.exceptions.JokeNotFoundError;
-import com.dojo1.dojobf.exceptions.JokeNotFoundException;
-import com.dojo1.dojobf.model.ChuckJokeDto;
-import com.dojo1.dojobf.service.ChuckApiService;
+import com.dojo1.dojobf.service.chuckjoke.ChuckApiService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -1,6 +1,6 @@
-package com.dojo1.dojobf.service;
+package com.dojo1.dojobf.service.chuckjoke;
 
-import com.dojo1.dojobf.model.ChuckJokeDto;
+import com.dojo1.dojobf.model.chuckjoke.ChuckJokeDto;
 import com.dojo1.dojobf.webclient.chuckapi.ChuckApiWebClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,16 +1,16 @@
-package com.dojo1.dojobf.model;
+package com.dojo1.dojobf.model.chuckjoke;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RickMortySeasonsEpisodesDTO {
-    private List<RickMortySeasonDTO> listOfEpisodesInSeason;
+public class ChuckJokeDto {
+    private String time;
+    private String category;
+    private String joke;
 }

@@ -6,6 +6,6 @@ import java.util.List;
 
 @Getter
 public class EpisodesDTO {
-    private EpisodesInfoDTO info;
-    private List<EpisodesResultsDTO> results;
+    private InfoDTO info;
+    private List<ResultsDTO> results;
 }

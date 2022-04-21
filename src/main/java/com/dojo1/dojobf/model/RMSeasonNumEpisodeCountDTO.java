@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class RickMortySeasonDTO {
+public class RMSeasonNumEpisodeCountDTO {
     private int seasonNumber;
     private int episodesCount;
 }
