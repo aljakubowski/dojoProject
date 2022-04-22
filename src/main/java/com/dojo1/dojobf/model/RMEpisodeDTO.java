@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @Builder
 public class RMEpisodeDTO {
+    private String season;
     private String name;
     private String air_date;
     private List<RMCharactersDTO> episode_characters;

@@ -38,14 +38,24 @@ public class RickMortyApiService {
 
         List<RMEpisodeDTO> resultList = new ArrayList<>();
 
-        listOfEpisodes.forEach(e -> {
+        for (int i = 0; i < listOfEpisodes.size()-1; i++) {
+
             RMEpisodeDTO r = RMEpisodeDTO.builder()
-                    .name(e.getName())
-                    .air_date(e.getAir_date())
-                    .episode_characters(getListOfCharactersFromEpisode(e)).build();
-            log.info("fetching < < < : " + e.getName());
+                    .season(String.valueOf(i+1))
+                    .name(listOfEpisodes.get(i).getName())
+                    .air_date(listOfEpisodes.get(i).getAir_date())
+                    .episode_characters(getListOfCharactersFromEpisode(listOfEpisodes.get(i))).build();
             resultList.add(r);
-        });
+        }
+
+//        listOfEpisodes.forEach(e -> {
+//            RMEpisodeDTO r = RMEpisodeDTO.builder()
+//                    .name(e.getName())
+//                    .air_date(e.getAir_date())
+//                    .episode_characters(getListOfCharactersFromEpisode(e)).build();
+//            log.info("fetching < < < : " + e.getName());
+//            resultList.add(r);
+//        });
 
         return resultList;
     }
