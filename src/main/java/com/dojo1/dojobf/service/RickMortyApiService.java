@@ -4,7 +4,7 @@ import com.dojo1.dojobf.model.RMEpisodeDTO;
 import com.dojo1.dojobf.model.RMSeasonNumEpisodeCountDTO;
 import com.dojo1.dojobf.model.RMSeasonsListDTO;
 import com.dojo1.dojobf.webclient.rickymortyapi.RickMortyWebClient;
-import com.dojo1.dojobf.webclient.rickymortyapi.dto.RMCharactersDTO;
+import com.dojo1.dojobf.webclient.rickymortyapi.dto.RMCharacterDTO;
 import com.dojo1.dojobf.webclient.rickymortyapi.dto.ResultsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,97 +34,98 @@ public class RickMortyApiService {
     public List<RMEpisodeDTO> getEpisodesOfSeason(int seasonNum) {
         log.info(">>> >> running getEpisodesOfSeason() method");
 
-        List<ResultsDTO> listOfEpisodes = getEpisodesFromSeason(seasonNum);
+        List<ResultsDTO> resultsDtoList = getEpisodesFromSeason(seasonNum);
 
-        List<RMEpisodeDTO> resultList = new ArrayList<>();
+        List<RMEpisodeDTO> episodesListWithInfo = new ArrayList<>();
 
-        for (int i = 0; i < listOfEpisodes.size()-1; i++) {
+        for (int i = 0; i < resultsDtoList.size() - 1; i++) {
 
-            RMEpisodeDTO r = RMEpisodeDTO.builder()
+            RMEpisodeDTO episode = RMEpisodeDTO.builder()
                     .season(String.valueOf(seasonNum))
-                    .name(listOfEpisodes.get(i).getName())
-                    .air_date(listOfEpisodes.get(i).getAir_date())
-                    .episode_characters(getListOfCharactersFromEpisode(listOfEpisodes.get(i))).build();
-            log.info("fetching < < < " + (i+1) +"/" + (listOfEpisodes.size()-1) + " name: " +listOfEpisodes.get(i).getName());
-            resultList.add(r);
+                    .name(resultsDtoList.get(i).getName())
+                    .air_date(resultsDtoList.get(i).getAir_date())
+                    .episode_characters(getListOfCharactersFromEpisode(resultsDtoList.get(i))).build();
+
+            log.info("fetching < < < " + (i + 1) + "/" + (resultsDtoList.size() - 1) + " name: " + resultsDtoList.get(i).getName());
+
+            episodesListWithInfo.add(episode);
         }
 
-        return resultList;
+        return episodesListWithInfo;
     }
 
-    private List<RMCharactersDTO> getListOfCharactersFromEpisode(ResultsDTO episode) {
-        List<RMCharactersDTO> list = new ArrayList<>();
+    private List<RMCharacterDTO> getListOfCharactersFromEpisode(ResultsDTO episode) {
+        List<RMCharacterDTO> list = new ArrayList<>();
 
-        episode.getCharacters().forEach(c -> {
-            list.add(getCharacterInfo(c.substring(42)));
-        });
+        episode.getCharacters().forEach(c -> list.add(getCharacterInfo(c.substring(42))));
 
         return list;
     }
 
 
-    private RMCharactersDTO getCharacterInfo(String num) {
+    private RMCharacterDTO getCharacterInfo(String num) {
         return rickMortyWebClient.getCharacterInfo(num);
     }
+
 
     private List<ResultsDTO> getEpisodesFromSeason(int seasonNum) {
         List<List<ResultsDTO>> list = getListOfSeasonsWithListOfEpisodes();
         return list.get(seasonNum - 1);
     }
 
+
     private List<List<ResultsDTO>> getListOfSeasonsWithListOfEpisodes() {
 
-        /** get all episodes */
-        List<ResultsDTO> list = getAllEpisodesList();
-        /** get num of episodes */
-        int numOfLastSeason = getNumOfSeason(list.get(list.size() - 1).getEpisode());
+        List<ResultsDTO> listOfAllEpisodes = getAllEpisodesList();
+        int numOfSeasons = getNumOfSeason(listOfAllEpisodes.get(listOfAllEpisodes.size() - 1).getEpisode());
 
-        List<List<ResultsDTO>> dividedList = new ArrayList<>();
+        List<List<ResultsDTO>> listOfSeasonsWithListOfEpisodes = new ArrayList<>();
 
-        /** iterate through all seasons & add episodes to proper seasons*/
-        for (int i = 1; i <= numOfLastSeason; i++) {
+        /** iterate through all seasons & add episodes to proper season */
+        for (int i = 1; i <= numOfSeasons; i++) {
             int seasonNum = i;
-            List<ResultsDTO> listOfRes = new ArrayList<>();
-            list.forEach(e -> {
+            List<ResultsDTO> episodesInCurrentSeason = new ArrayList<>();
+            listOfAllEpisodes.forEach(e -> {
                 if (seasonNum == getNumOfSeason(e.getEpisode())) {
-                    listOfRes.add(e);
+                    episodesInCurrentSeason.add(e);
                 }
             });
-            dividedList.add(listOfRes);
+            listOfSeasonsWithListOfEpisodes.add(episodesInCurrentSeason);
         }
-        return dividedList;
+        return listOfSeasonsWithListOfEpisodes;
     }
 
+
     /**
-     * @return list of seasons with episodes numbed
+     * @return list of seasons with episodes number
      */
     public RMSeasonsListDTO getSeasonAndEpisodesDTO() {
         log.info(">>> >> running getSeasonAndEpisodesDTO() method");
 
-        /** get all episodes */
-        List<ResultsDTO> list = getAllEpisodesList();
-        /** get num of episodes */
-        int numOfLastSeason = getNumOfSeason(list.get(list.size() - 1).getEpisode());
+        List<ResultsDTO> listOfAllEpisodes = getAllEpisodesList();
+        int numOfSeasons = getNumOfSeason(listOfAllEpisodes.get(listOfAllEpisodes.size() - 1).getEpisode());
 
-        /** create temp list of seasons and episodes*/
-        List<RMSeasonNumEpisodeCountDTO> listOfOneSeasonAndEpisodes = new ArrayList<>();
-        /** iterate through all seasons & add episodes to proper seasons*/
-        for (int i = 1; i <= numOfLastSeason; i++) {
+        /**     create temp list of seasons and episodes    */
+        List<RMSeasonNumEpisodeCountDTO> seasonAndEpisodesNumberList = new ArrayList<>();
+
+        /** iterate through all seasons & add episodes to proper seasons    */
+        for (int i = 1; i <= numOfSeasons; i++) {
             int seasonNum = i;
-            List<ResultsDTO> listOfRes = new ArrayList<>();
-            list.forEach(e -> {
+            List<ResultsDTO> episodesInCurrentSeason = new ArrayList<>();
+            listOfAllEpisodes.forEach(e -> {
                 if (seasonNum == getNumOfSeason(e.getEpisode())) {
-                    listOfRes.add(e);
+                    episodesInCurrentSeason.add(e);
                 }
             });
-            /** build RickMortySeasonWithEpisodesCountDTO - object with seasons and episodes number */
-            RMSeasonNumEpisodeCountDTO rmsDTO = RMSeasonNumEpisodeCountDTO.builder().seasonNumber(i).episodesCount(listOfRes.size()).build();
-            /** add RickMortySeasonDTO to temp list*/
-            listOfOneSeasonAndEpisodes.add(rmsDTO);
+
+            RMSeasonNumEpisodeCountDTO seasonAndEpisodesNumber = RMSeasonNumEpisodeCountDTO
+                    .builder().seasonNumber(i).episodesCount(episodesInCurrentSeason.size()).build();
+
+            seasonAndEpisodesNumberList.add(seasonAndEpisodesNumber);
         }
 
         /** create RickMortySeasonsListDTO - object with list of objects with seasonNum and episodes count*/
-        return RMSeasonsListDTO.builder().listOfEpisodesInSeason(listOfOneSeasonAndEpisodes).build();
+        return RMSeasonsListDTO.builder().listOfEpisodesInSeason(seasonAndEpisodesNumberList).build();
     }
 
 

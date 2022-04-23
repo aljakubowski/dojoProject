@@ -1,6 +1,6 @@
 package com.dojo1.dojobf.model;
 
-import com.dojo1.dojobf.webclient.rickymortyapi.dto.RMCharactersDTO;
+import com.dojo1.dojobf.webclient.rickymortyapi.dto.RMCharacterDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +14,5 @@ public class RMEpisodeDTO {
     private String season;
     private String name;
     private String air_date;
-    private List<RMCharactersDTO> episode_characters;
+    private List<RMCharacterDTO> episode_characters;
 }
