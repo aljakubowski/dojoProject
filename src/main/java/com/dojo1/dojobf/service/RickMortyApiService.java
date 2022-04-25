@@ -3,6 +3,7 @@ package com.dojo1.dojobf.service;
 import com.dojo1.dojobf.model.RMEpisodeDTO;
 import com.dojo1.dojobf.model.RMSeasonNumEpisodeCountDTO;
 import com.dojo1.dojobf.model.RMSeasonsListDTO;
+import com.dojo1.dojobf.model.RMSeasonsWithDetailsDTO;
 import com.dojo1.dojobf.webclient.rickymortyapi.RickMortyWebClient;
 import com.dojo1.dojobf.webclient.rickymortyapi.dto.RMCharacterDTO;
 import com.dojo1.dojobf.webclient.rickymortyapi.dto.ResultsDTO;
@@ -19,6 +20,18 @@ import java.util.List;
 public class RickMortyApiService {
 
     private final RickMortyWebClient rickMortyWebClient;
+
+
+    /**
+     * @return season with list of all episodes with whole data
+     */
+    public RMSeasonsWithDetailsDTO getAllSeasonsWithAllDetails(int seasonNum) {
+
+        List<RMEpisodeDTO> episodesOfSeason = getEpisodesOfSeason(seasonNum);
+
+        return RMSeasonsWithDetailsDTO.builder().season(String.valueOf(seasonNum)).episodes(episodesOfSeason).build();
+
+    }
 
     /**
      * @return list of all episodes with whole data
@@ -41,7 +54,6 @@ public class RickMortyApiService {
         for (int i = 0; i < resultsDtoList.size() - 1; i++) {
 
             RMEpisodeDTO episode = RMEpisodeDTO.builder()
-                    .season(String.valueOf(seasonNum))
                     .name(resultsDtoList.get(i).getName())
                     .air_date(resultsDtoList.get(i).getAir_date())
                     .episode_characters(getListOfCharactersFromEpisode(resultsDtoList.get(i))).build();

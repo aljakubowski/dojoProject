@@ -2,6 +2,7 @@ package com.dojo1.dojobf.controller;
 
 import com.dojo1.dojobf.model.RMEpisodeDTO;
 import com.dojo1.dojobf.model.RMSeasonsListDTO;
+import com.dojo1.dojobf.model.RMSeasonsWithDetailsDTO;
 import com.dojo1.dojobf.service.RickMortyApiService;
 import com.dojo1.dojobf.webclient.rickymortyapi.dto.ResultsDTO;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,18 @@ public class RickMortyApiController {
 
 
     /**
+     * endpoint with list of seasons and all episodes data
+     */
+    @GetMapping(path = "/season/{num}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public RMSeasonsWithDetailsDTO getSeasonAndEpisodesData(@PathVariable int num){
+        log.info(">>> receiving request on endpoint: /episodes");
+        return rmApiService.getAllSeasonsWithAllDetails(num);
+    }
+
+
+
+    /**
      * endpoint with list of seasons and episodes number
      */
     @GetMapping(path = "/episodes")
@@ -32,12 +45,12 @@ public class RickMortyApiController {
     /**
      * endpoint with list of episodes from each season wit character list
      */
-    @GetMapping(path = "/season/{num}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public List<RMEpisodeDTO> getEpisodesOfSeason(@PathVariable int num){
-        log.info(">>> receiving request on endpoint: /season/{num}");
-        return rmApiService.getEpisodesOfSeason(num);
-    }
+//    @GetMapping(path = "/season/{num}")
+//    @CrossOrigin(origins = "http://localhost:4200")
+//    public List<RMEpisodeDTO> getEpisodesOfSeason(@PathVariable int num){
+//        log.info(">>> receiving request on endpoint: /season/{num}");
+//        return rmApiService.getEpisodesOfSeason(num);
+//    }
 
     /**
      * raw list of all episodes
