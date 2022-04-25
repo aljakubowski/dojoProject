@@ -64,6 +64,29 @@ public class RickMortyApiService {
     }
 
 
+    private List<RMEpisodeDTO> getEpisodesOfSeason(int seasonNum) {
+
+        List<List<ResultsDTO>> list = getListOfSeasonsWithListOfEpisodes();
+        List<ResultsDTO> resultsDtoList = list.get(seasonNum-1);
+
+        List<RMEpisodeDTO> episodesListWithInfo = new ArrayList<>();
+
+        for (int i = 0; i < resultsDtoList.size(); i++) {
+
+            RMEpisodeDTO episode = RMEpisodeDTO.builder()
+                    .name(resultsDtoList.get(i).getName())
+                    .air_date(resultsDtoList.get(i).getAir_date())
+                    .episode_characters(getListOfCharactersFromEpisode(resultsDtoList.get(i))).build();
+
+            log.info("fetching < < < " + (i + 1) + "/" + (resultsDtoList.size()) + " name: " + resultsDtoList.get(i).getName());
+
+            episodesListWithInfo.add(episode);
+        }
+
+        return episodesListWithInfo;
+    }
+
+
     private List<List<ResultsDTO>> getListOfSeasonsWithListOfEpisodes() {
 
         List<ResultsDTO> listOfAllEpisodes = getAllEpisodesList();
@@ -86,26 +109,7 @@ public class RickMortyApiService {
         return listOfSeasonsWithListOfEpisodes;
     }
 
-    private List<RMEpisodeDTO> getEpisodesOfSeason(int seasonNum) {
 
-        List<ResultsDTO> resultsDtoList = getEpisodesFromSeason(seasonNum);
-
-        List<RMEpisodeDTO> episodesListWithInfo = new ArrayList<>();
-
-        for (int i = 0; i < resultsDtoList.size(); i++) {
-
-            RMEpisodeDTO episode = RMEpisodeDTO.builder()
-                    .name(resultsDtoList.get(i).getName())
-                    .air_date(resultsDtoList.get(i).getAir_date())
-                    .episode_characters(getListOfCharactersFromEpisode(resultsDtoList.get(i))).build();
-
-            log.info("fetching < < < " + (i + 1) + "/" + (resultsDtoList.size()) + " name: " + resultsDtoList.get(i).getName());
-
-            episodesListWithInfo.add(episode);
-        }
-
-        return episodesListWithInfo;
-    }
 
 
     private List<RMCharacterDTO> getListOfCharactersFromEpisode(ResultsDTO episode) {
@@ -119,12 +123,6 @@ public class RickMortyApiService {
 
     private RMCharacterDTO getCharacterInfo(String num) {
         return rickMortyWebClient.getCharacterInfo(num);
-    }
-
-
-    private List<ResultsDTO> getEpisodesFromSeason(int seasonNum) {
-        List<List<ResultsDTO>> list = getListOfSeasonsWithListOfEpisodes();
-        return list.get(seasonNum - 1);
     }
 
 
