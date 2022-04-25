@@ -1,6 +1,5 @@
 package com.dojo1.dojobf.controller;
 
-import com.dojo1.dojobf.model.RMEpisodeDTO;
 import com.dojo1.dojobf.model.RMSeasonsListDTO;
 import com.dojo1.dojobf.model.RMSeasonsWithDetailsDTO;
 import com.dojo1.dojobf.service.RickMortyApiService;
@@ -21,43 +20,33 @@ public class RickMortyApiController {
 
 
     /**
-     * endpoint with list of seasons and all episodes data
+     * @return endpoint with list of seasons and episodes number
      */
-    @GetMapping(path = "/season/{num}")
+    @GetMapping(path = "/seasons")
     @CrossOrigin(origins = "http://localhost:4200")
-    public RMSeasonsWithDetailsDTO getSeasonAndEpisodesData(@PathVariable int num){
-        log.info(">>> receiving request on endpoint: /episodes");
-        return rmApiService.getAllSeasonsWithAllDetails(num);
-    }
-
-
-
-    /**
-     * endpoint with list of seasons and episodes number
-     */
-    @GetMapping(path = "/episodes")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public RMSeasonsListDTO getSeasonAndEpisodes(){
+    public RMSeasonsListDTO getSeasonAndEpisodes() {
         log.info(">>> receiving request on endpoint: /episodes");
         return rmApiService.getSeasonAndEpisodesDTO();
     }
 
+
     /**
-     * endpoint with list of episodes from each season wit character list
+     * @return endpoint with chosen season and list of episodes with list of characters
      */
-//    @GetMapping(path = "/season/{num}")
-//    @CrossOrigin(origins = "http://localhost:4200")
-//    public List<RMEpisodeDTO> getEpisodesOfSeason(@PathVariable int num){
-//        log.info(">>> receiving request on endpoint: /season/{num}");
-//        return rmApiService.getEpisodesOfSeason(num);
-//    }
+    @GetMapping(path = "/seasons/{num}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public RMSeasonsWithDetailsDTO getSeasonAndEpisodesData(@PathVariable int num) {
+        log.info(">>> receiving request on endpoint: /episodes");
+        return rmApiService.getSeasonWithEpisodesDetails(num);
+    }
+
 
     /**
      * raw list of all episodes
      */
     @GetMapping(path = "/episodesall")
     @CrossOrigin(origins = "http://localhost:4200")
-    public List<ResultsDTO> getAllEpisodesList(){
+    public List<ResultsDTO> getAllEpisodesList() {
         rmApiService.getSeasonAndEpisodesDTO();
         log.info(">>> receiving request on endpoint: /episodesall");
         return rmApiService.getAllEpisodesList();
