@@ -50,13 +50,6 @@ public class RickMortyWebClient {
     private int getNumberOfPages() {
         EpisodesDTO info;
 
-//        try {
-//            info = createRequestToApi("episode", EpisodesDTO.class);
-//        } catch (Exception e) {
-//            throw new JokeNotFoundException("s");
-//        }
-//        return info.getInfo().getPages();
-
         try {
             info = createRequestToApi("episode", EpisodesDTO.class);
         } catch (RMEpisodeException e){
