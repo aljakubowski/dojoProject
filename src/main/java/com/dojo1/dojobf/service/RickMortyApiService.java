@@ -21,6 +21,9 @@ public class RickMortyApiService {
 
     private final RickMortyWebClient rickMortyWebClient;
 
+    //FIXME this method is a bit against the single responsibility - make a method to get all seasons, make a method
+    // to return episodes number from a single season
+
     /**
      * @return list of seasons with episodes number
      */
@@ -29,8 +32,8 @@ public class RickMortyApiService {
 
         List<List<ResultsDTO>> listOfSeasonsWithListOfEpisodes = getListOfSeasonsWithListOfEpisodes();
 
-        /**     create temp list of seasons and episodes    */
-        List<RMSeasonNumEpisodeCountDTO> seasonAndEpisodesNumberList = new ArrayList<>();
+        /**     create temp list of seasons and episodes    */ //TODO - double asterisk is for javadoc. Use /* */ or //
+        List<RMSeasonNumEpisodeCountDTO> seasonAndEpisodesNumberList = new ArrayList<>(); // TODO instead of a comment, name the variable appropriately
 
         for (int i = 0; i < listOfSeasonsWithListOfEpisodes.size(); i++) {
 
@@ -67,12 +70,12 @@ public class RickMortyApiService {
     private List<RMEpisodeDTO> getEpisodesOfSeason(int seasonNum) {
 
         List<List<ResultsDTO>> list = getListOfSeasonsWithListOfEpisodes();
-        List<ResultsDTO> resultsDtoList = list.get(seasonNum-1);
+        List<ResultsDTO> resultsDtoList = list.get(seasonNum - 1);
 
         List<RMEpisodeDTO> episodesListWithInfo = new ArrayList<>();
 
         for (int i = 0; i < resultsDtoList.size(); i++) {
-
+        //FIXME instead of for i use a foreach loop - every loop you run get(i) 4 times.
             RMEpisodeDTO episode = RMEpisodeDTO.builder()
                     .name(resultsDtoList.get(i).getName())
                     .air_date(resultsDtoList.get(i).getAir_date())
@@ -86,12 +89,12 @@ public class RickMortyApiService {
         return episodesListWithInfo;
     }
 
-
+    //FIXME instead of getting all episodes and attaching them to a season, get all seasons and then get episodes from them
     private List<List<ResultsDTO>> getListOfSeasonsWithListOfEpisodes() {
 
         List<ResultsDTO> listOfAllEpisodes = getAllEpisodesList();
         int numOfSeasons = getNumOfSeason(listOfAllEpisodes.get(listOfAllEpisodes.size() - 1).getEpisode());
-
+        //FIXME instead of commenting, move to new method
         /** initialize new lists */
         List<List<ResultsDTO>> listOfSeasonsWithListOfEpisodes = new ArrayList<>();
         for (int i = 0; i < numOfSeasons; i++) {
@@ -110,12 +113,10 @@ public class RickMortyApiService {
     }
 
 
-
-
     private List<RMCharacterDTO> getListOfCharactersFromEpisode(ResultsDTO episode) {
         List<RMCharacterDTO> list = new ArrayList<>();
 
-        episode.getCharacters().forEach(c -> list.add(getCharacterInfo(c.substring(42))));
+        episode.getCharacters().forEach(c -> list.add(getCharacterInfo(c.substring(42)))); //TODO magic number
 
         return list;
     }
@@ -127,7 +128,7 @@ public class RickMortyApiService {
 
 
     private int getNumOfSeason(String episode) {
-        episode = episode.substring(2, 3);
+        episode = episode.substring(2, 3); //TODO magic number
         return Integer.parseInt(episode);
     }
 

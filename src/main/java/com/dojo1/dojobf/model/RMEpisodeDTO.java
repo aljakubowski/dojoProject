@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Builder
 public class RMEpisodeDTO {
-    private String name;
-    private String air_date;
+    private String name; //TODO Can name be empty?
+    private String air_date; //TODO can air_date be 01.01.0001?
     private List<RMCharacterDTO> episode_characters;
 }

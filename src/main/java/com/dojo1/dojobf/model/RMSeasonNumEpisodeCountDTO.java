@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class RMSeasonNumEpisodeCountDTO {
-    private int seasonNumber;
-    private int episodesCount;
+    private int seasonNumber; //TODO can episode number be <0?
+    private int episodesCount; //TODO can episode count be <0?
 }

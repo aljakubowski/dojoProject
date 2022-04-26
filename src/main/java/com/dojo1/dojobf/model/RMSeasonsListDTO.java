@@ -12,5 +12,5 @@ import java.util.List;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RMSeasonsListDTO {
-    private List<RMSeasonNumEpisodeCountDTO> listOfEpisodesInSeason;
+    private List<RMSeasonNumEpisodeCountDTO> listOfEpisodesInSeason; //TODO does this require a setter?
 }

@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @Builder
 public class RMSeasonsWithDetailsDTO {
-    private String season;
-    private List<RMEpisodeDTO> episodes;
+    private String season; //TODO non descriptive var name. Can season be empty? Shouldn't this be a number?
+    private List<RMEpisodeDTO> episodes; //TODO does this need a setter?
 }
